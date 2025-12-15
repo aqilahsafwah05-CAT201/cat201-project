@@ -3,7 +3,7 @@
     <head>
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <title>HijabLuxe</title>
+        <title>Hijab Luxe - The Art of Elegant Coverage</title>
         <link rel="stylesheet" href="styles.css">
     </head>
     <body>
@@ -13,25 +13,28 @@
                 <a href="">ShopNow</a>
             </div>
             <div id="nav-bar">
-                <h1>HijabLuxe</h1>
-                <button id="home-button">Home</button>
-                <button>Contact</button>
-                <button>About</button>
-                <button>Sign Up</button>
-                <textarea placeholder="What are you looking for?"></textarea>
+                <h1 id="ShopName">HijabLuxe</h1>
+                <div id="nav-bar-button">
+                    <button id="home-button">Home</button>
+                    <button id="contact-button">Contact</button>
+                    <button id="about-button">About</button>
+                    <button id="signup-button">Sign Up</button>
+                    <input placeholder="What are you looking for?" id="finding"></input><br>
+                </div>
             </div>
+            <div class="line"></div>
             <div id="login-page">
                     <img src="login-image.png" class="login-image">
                     <div id="login-info">
                         <h1>Log in to HijabLuxe</h1>
                         <p>Enter your details below</p>
-                        <div>
-                            <textarea placeholder="Email or Phone Number"></textarea><br>
-                            <textarea placeholder="Password"></textarea><br>
-                        </div>
-                        <div>
+                    
+                            <input id="email-phone-login" placeholder="Email or Phone Number"></input>
+                            <input id="password-login" placeholder="Password"></input>
+                        
+                        <div id="login-info-bottom">
                             <button id="login-button">Log In</button>
-                            <a>Forget Password</a>
+                            <button id="forget-password-login">Forget Password?</button>
                         </div>
                     </div>
             </div>
@@ -40,44 +43,153 @@
                 <div id="sign-up-info">
                     <h1>Create an Account</h1>
                     <p>Enter your details below</p>
-                    <textarea placeholder="Name"></textarea><br>
-                    <textarea placeholder="Email or Phone Number"></textarea><br>
-                    <textarea placeholder="Password"></textarea><br>
-                    <button id="create-account-button">Create Account</button><br>
-                    <button id="google-button">Sign up with Google</button>
-                    
+                    <input id="name" placeholder="Name"></input>
+                    <input id="email-phone"placeholder="Email or Phone Number"></input>
+                    <input id="password" placeholder="Password"></input>
+                    <div id="create-button">
+                        <button id="create-account-button">Create Account</button>
+                        <p>or</p>
+                        <button id="google-button"><img src="Icon-Google.png">Sign up with Google</button>
+                    </div>                    
+                    <div id="sign-up-bottom">
                         <p>Already have account?</p>
-                        <a>Log In</a>                    
+                        <button id="login-button">Log In</button>                    
+                    </div>
                 </div>
             </div>
-            <div id="forget-password-main">
+            <div id="forget-password-main-page">
                 <img src="login-image.png" class="login-image">
                 <div id="forget-main-info">
                     <h1>Forget Password</h1>
                     <p>Enter your details below</p>
-                    <textarea placeholder="Email or Phone Number"></textarea>
+                    <input id="forget-email-phone" placeholder="Email or Phone Number"></input>
                     <button id="request-code">Request Verification Code</button>
                 </div>
             </div>
-            <div id="forget-password-code">
+            <div id="forget-password-code-page">
                 <img src="login-image.png" class="login-image">
                 <div id="forget-code-info">
                     <h1>Forget Password</h1>
                     <p>Enter your details below</p>
-                    <textarea placeholder="Enter Verification Code"></textarea>
+                    <input id="verification-code" placeholder="Enter Verification Code"></input>
                     <button id="verify-code">Verify Code</button>
                 </div>
             </div>
-            <div id="cart-page">
-                <p>Home / Cart</p>
-                <div id="cart-product">
+            <div id="main-page">
+                <div id="main-page-header">
+                    <div id="main-page-button">
+                        <button id="bawal-button"><span>Bawal</span><img src="Vector.png"></button>
+                        <button id="selendang-button"><span>Selendang</span><img src="Vector.png"></button>
+                        <button id="innerCap-button"><span>Inner Cap</span><img src="Vector.png"></button>
+                    </div>
+                    <div class="v-line"></div>
+                    <div>
+                        <img src="main-page.webp" id="main-page-1">
 
+                    </div>
                 </div>
-                <button id="return-shop">Return To Shop</button>
-                <button id="update-cart">Update Cart</button>
+                <div id="new-arrival">
+                    <h3 id="new-arrival-title">New Arrival</h3>
+                    <div id="new-arrival-content">
+                        <div id="new-1">
+                            <img src="Pink Kembang BACK.webp" id="pink-kembang">
+                            <p>Bawal Pink Kembang</p>
+                            <p>$45</p>
+                            <img src="Five star.png">
+                            <button class="add-to-cart">Add To Cart</button>
+                        </div>
+                        <div id="new-2">
+                            <img src="Grey Gintih FS.webp" id="grey-gintih">
+                            <p>Selendang Grey Premium</p>
+                            <p>$80</p>
+                            <img src="Five star.png">
+                            <button class="add-to-cart">Add To Cart</button>
+                        </div>
+                        <div id="new-3">
+                            <img src="Black Jelaga FS.webp" id="grey-gintih">
+                            <p>Selendang Black Mekkah</p>
+                            <p>$80</p>
+                            <img src="Four Half Star.png">
+                            <button class="add-to-cart">Add To Cart</button>
+                        </div>
+                    </div>   
+                </div>
+                <div id="popular-now">
+                    <h3 id="popular-now-title">Popular Now</h3>
+                    <div id="popular-content">
+                        <div id="popular-1">
+                            <img src="brown husk.webp" id="brown-husk">
+                            <p>Bawal Brown Husk</p>
+                            <p>$30</p>
+                            <img src="Five star.png">
+                            <button class="add-to-cart">Add To Cart</button>
+                        </div>
+                        <div id="popular-2">
+                            <img src="WHITE PANCAR BACK.webp" id="white-pancar">
+                            <p>Bawal White Sulam</p>
+                            <p>$109</p>
+                            <img src="Five star.png">
+                            <button class="add-to-cart">Add To Cart</button>
+                        </div>
+                        <div id="popular-3">
+                            <img src="TudungPeople-Ikatan-Lite-03.webp" id="ikatan-style">
+                            <p>Selendang Ikatan Lite</p>
+                            <p>$299</p>
+                            <img src="Four Half Star.png">
+                            <button class="add-to-cart">Add To Cart</button>
+                        </div>
+                    </div>   
+                </div>
+                <div id="main-bottom">
+                    <div class="bottom-services">
+                        <img src="Services.png" id="delivery-pic">
+                        <h3>FREE AND FAST DELIVERY</h3>
+                        <p>Free Delivery For Order Above $140</p>
+                    </div>
+                    <div class="bottom-services">
+                        <img src="Services (1).png" id="customer-pic">
+                        <h3>24/7 CUSTOMER SERVICES</h3>
+                        <p>Friendly 24/7 Customer Services</p>
+                    </div>
+                    <div class="bottom-services">
+                        <img src="Services (2).png" id="moneyback-pic">
+                        <h3>MONEY BACK GUARANTEE</h3>
+                        <p>We Return Money Within 30 Days</p>
+                    </div>
+                </div>
+            </div>
+
+            <div id="cart-page">
+                <p id="home-cart">Home / Cart</p>
+                <div id="cart">
+                    <table>
+                        <tr>
+                            <th>Product</th>
+                            <th>Price</th>
+                            <th>Quantity</th>
+                            <th>Subtotal</th>
+                        </tr>
+                        <tr>
+                            <td>Bawal Premium Mekwa</td>
+                            <td>$23.30</td>
+                            <td>1</td>
+                            <td>$23.30</td>
+                        </tr>
+                        <tr>
+                            <td>Bawal Premium A</td>
+                            <td>$45</td>
+                            <td>1</td>
+                            <td>$45</td>                          
+                        </tr>
+                    </table>
+                </div>
+                <div id="return-update-button">
+                    <button id="return-shop">Return To Shop</button>
+                    <button id="update-cart">Update Cart</button>
+                </div>
                 <div id="cart-bottom">
                     <div id="apply-coupon">
-                        <textarea placeholder="Coupon Code"></textarea>
+                        <input placeholder="Coupon Code"></input>
                         <button id="apply-coupon">Apply Coupon</button>
                     </div>
                     <div id="cart-total">
@@ -92,14 +204,15 @@
                     </div>
                 </div>
             </div>
+
             <div id="footer-part">
                 <div>
                     <h2>HijabLuxe</h2>
                     <p>Subscribe</p>
                     <p>Get 10% off your first order</p>
-                    <textarea placeholder="Enter your email">
+                    <input placeholder="Enter your email">
                         <img>
-                    </textarea>
+                    </input>
                 </div>
                 <div>
                     <h3>Support</h3>
@@ -124,7 +237,8 @@
                 <div>
                     <h3>Download</h3>
                     <p>Save $4 with App New User Only</p>
-                    <img>
+                    <img src="qr.png">
+                    <img src="getOnApps.png">
                 </div>
             </div>
         </div>

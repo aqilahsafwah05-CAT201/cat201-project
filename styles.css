@@ -13,16 +13,36 @@ body{
     gap: 20px;
 }
 
+#finding{
+    padding: 5px;
+}
+
+.line {
+    width: 100%;
+    height: 1px;
+    background-color: rgb(182, 176, 176);
+    margin: 20px 0;
+  }
+
 #nav-bar{
-    background-color: white;
     display: flex;
-    gap: 20px;
-    align-items: center;
+    background-color: white;
     justify-content: center;
-    padding-top: 25px;
+    align-items: center;
+    gap: 400px;
+    padding-top: 30px;
+}
+
+#nav-bar-button{
+    display: flex;
+    justify-content: center;
+    gap: 40px;
+    padding-top: 0;
+    
 }
 
 #footer-part{
+    font-size: 14px;
     background-color: black;
     color: white;
     display: flex;
@@ -37,35 +57,314 @@ body{
     width: 60%;
 }
 
-#home-button{
+#home-button,
+#contact-button,
+#about-button,
+#signup-button{
     background-color: white;
     border: 0;
 }
 
+#home-button:hover,
+#contact-button:hover,
+#about-button:hover,
+#signup-button:hover{
+    opacity: 0.8;
+}
+
 #login-page{
     display: flex;
-    padding-top: 30px;
     padding-bottom: 160px;
     margin-left: 0;
     display: none;
 }
 
 #login-info{
+    display: flex;
+    flex-direction: column;
     padding: 5%;
-    padding-top: 150px;
+    padding-top: 130px;
     margin-left: 25px;
-    
+    gap: 20px;
+}
+
+#email-phone-login,
+#password-login,
+#forget-email-phone,
+#verification-code{
+    border: none;
+    border-bottom: 2px solid #ccc;
+    outline: none;
+}
+
+
+#email-phone-login:focus,
+#password-login:focus,
+#forget-email-phone:focus,
+#verification-code:focus{
+  border-bottom-color:  #616060;
+}
+
+#login-button{
+    border: none;
+    background-color: white;
+}
+
+#login-button:hover{
+    opacity: 0.8;
+}
+
+#forget-password-login{
+    border: none;
+    background-color: white;
+}
+
+#forget-password-login:hover{
+    opacity: 0.8;
+}
+
+#login-info-bottom{
+    display: flex;
+    gap: 100px;
 }
 
 #sign-up-page{
     display: flex;
-    padding-top: 30px;
     padding-bottom: 160px;
     margin-left: 0;
+    display: none;
 }
 
 #sign-up-info{
     padding: 5%;
-    padding-top: 150px;
+    padding-top: 130px;
     margin-left: 25px;
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
 }
+
+#sign-up-bottom{
+    display: flex;
+    gap: 300px;
+}
+
+#create-button{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+#create-account-button,
+#google-button{
+    width: 500px;
+    height: 50px;
+}
+
+#google-button{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+}
+
+
+#name,
+#email-phone,
+#password{
+    border: none;
+    border-bottom: 2px solid #ccc;
+    outline: none;
+}
+
+#main-page{
+    display: flex;
+    flex-direction: column;
+ 
+    padding-bottom: 160px;
+    margin-left: 100px;
+    margin-right: 100px;
+    
+}
+
+#main-page-1{
+    height: 400px;
+    width: 800px;
+}
+
+
+#main-page-header{
+    display: flex;
+    justify-content: center;
+    font-size: 17px;
+}
+
+#main-page-button{
+    display: block;
+    margin-right: 50px;
+    padding-right: 20px ;
+}
+
+.v-line {
+  width: 0.5px;
+  height: 430px;
+  background-color: rgb(182, 176, 176);
+  margin-right: 50px;
+}
+
+#bawal-button,
+#selendang-button,
+#innerCap-button{
+    display: flex;
+    border: 0;
+    background-color: white;
+    padding: 10px;
+    font-size: 14px;
+    gap: 12px;
+}
+
+
+#bawal-button:hover,
+#selendang-button:hover,
+#innerCap-button:hover{
+    opacity: 0.8;
+}
+
+#new-arrival-title,
+#popular-now-title{
+    margin-left: 180px;
+}
+
+#new-arrival,
+#popular-now{
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    margin-top: 100px;
+}
+
+#new-arrival-content,
+#popular-content{
+    display: flex;
+    justify-content: center;
+    gap: 90px;
+}
+
+
+#pink-kembang,
+#grey-gintih,
+#black-jelaga,
+#brown-husk,
+#white-pancar,
+#ikatan-style{
+    height: 280px;
+    width: 200px;
+}
+
+#main-bottom{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-top: 100px;
+    gap: 150px;
+}
+
+.bottom-services{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+#delivery-pic,
+#customer-pic,
+#moneyback-pic{
+    width: 60px;
+    height: 60px;
+}
+
+
+#forget-password-main-page{
+    display: flex;
+    padding-bottom: 160px;
+    margin-left: 0;
+    display: none;
+}
+
+#forget-main-info{
+    display: flex;
+    flex-direction: column;
+    padding: 5%;
+    padding-top: 130px;
+    margin-left: 25px;
+    gap: 20px;
+}
+
+#request-code,
+#verify-code{
+    width: 200px;
+    height: 30px;
+}
+
+#forget-password-code-page{
+    display: flex;
+    padding-bottom: 160px;
+    margin-left: 0;
+    display: none;
+}
+
+#forget-code-info{
+    display: flex;
+    flex-direction: column;
+    padding: 5%;
+    padding-top: 130px;
+    margin-left: 25px;
+    gap: 20px;
+}
+
+#cart-page{
+    display: flex;
+    flex-direction: column;
+    display: none;
+}
+
+#cart-bottom{
+    display: flex;
+    margin-bottom: 20px;
+    justify-content: center;
+}
+
+#cart-total{
+    border: 2px solid black;
+    padding: 25px;
+    margin-left: 250px;
+}
+
+#return-update-button{
+    margin-top: 20px;
+    margin-bottom: 20px;
+}
+
+#cart{
+    display: flex;
+    margin-top: 20px;
+    margin-bottom: 20px;
+    justify-content: center;
+}
+
+th,td{
+    padding-left: 100px;
+    padding-right: 100px;
+    padding-bottom: 70px;
+}
+
+#home-cart{
+    margin-left: 200px;
+}
+
+#return-update-button{
+    display: flex;
+    justify-content: center;
+    gap: 20px;
+}
+
