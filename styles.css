@@ -4,6 +4,10 @@ body{
     margin: 0;
 }
 
+html {
+  scroll-behavior: smooth;
+}
+
 #header-part{
     background-color: black;
     color: white;
@@ -13,8 +17,9 @@ body{
     gap: 20px;
 }
 
-#finding{
-    padding: 5px;
+
+.page{
+    display: none;
 }
 
 .line {
@@ -61,16 +66,27 @@ body{
 #contact-button,
 #about-button,
 #signup-button,
-#profile-button{
+#profile-button,
+#cart-button{
+    cursor: pointer;
     background-color: white;
     border: 0;
+}
+
+#contact-button{
+  text-decoration: none;
+  padding: 8px 16px;
+  background: none;
+  border: none;
+  color: black;
 }
 
 #signup-button{
     display: block;
 }
 
-#profile-button{
+#profile-button,
+#cart-button{
     display: none;
 }
 
@@ -78,15 +94,14 @@ body{
 #contact-button:hover,
 #about-button:hover,
 #signup-button:hover,
-#profile-button:hover{
+#profile-button:hover,
+#cart-button:hover{
     opacity: 0.8;
 }
 
 #login-page{
-    display: flex;
     padding-bottom: 160px;
     margin-left: 0;
-    display: none;
 }
 
 #login-info{
@@ -148,10 +163,8 @@ body{
 }
 
 #sign-up-page{
-    display: flex;
     padding-bottom: 160px;
     margin-left: 0;
-    display: none;
 }
 
 #sign-up-info{
@@ -233,6 +246,7 @@ body{
     padding: 10px;
     font-size: 14px;
     gap: 12px;
+    cursor: pointer;
 }
 
 
@@ -307,10 +321,8 @@ body{
 
 
 #forget-password-main-page{
-    display: flex;
     padding-bottom: 160px;
     margin-left: 0;
-    display: none;
 }
 
 #forget-main-info{
@@ -329,10 +341,8 @@ body{
 }
 
 #forget-password-code-page{
-    display: flex;
     padding-bottom: 160px;
     margin-left: 0;
-    display: none;
 }
 
 #forget-code-info{
@@ -345,9 +355,7 @@ body{
 }
 
 #cart-page{
-    display: flex;
     flex-direction: column;
-    display: none;
 }
 
 #cart-bottom{
@@ -357,12 +365,13 @@ body{
 }
 
 #cart-total{
+    display: flex;
+    flex-direction: column;
     border: 2px solid black;
-    padding: 25px;
-    margin-left: 250px;
+    padding: 20px 100px 20px 100px;
 }
 
-#return-update-button{
+#return-button{
     margin-top: 20px;
     margin-bottom: 20px;
 }
@@ -375,8 +384,8 @@ body{
 }
 
 th,td{
-    padding-left: 100px;
-    padding-right: 100px;
+    padding-left: 50px;
+    padding-right: 50px;
     padding-bottom: 70px;
 }
 
@@ -384,7 +393,7 @@ th,td{
     margin-left: 200px;
 }
 
-#return-update-button{
+#return-button{
     display: flex;
     justify-content: center;
     gap: 20px;

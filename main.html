@@ -10,23 +10,23 @@
         <div id="desktop-view">
             <div id="header-part">
                 <p>Summer Sale For All Bawal Premium Set A - OFF 50%!</p>
-                <a href="">ShopNow</a>
+                <a href="#new-arrival">ShopNow</a>
             </div>
             <div id="nav-bar">
                 <h1 id="ShopName">HijabLuxe</h1>
                 <div id="nav-bar-button">
                     <button id="home-button">Home</button>
-                    <button id="contact-button">Contact</button>
+                    <a href="#footer-part" id="contact-button">Contact</a>
                     <button id="about-button">About</button>
                     <button id="signup-button">Sign Up</button>
                     <button id="profile-button">Profile</button>
-                    <input placeholder="What are you looking for?" id="finding"></input><br>
+                    <button id="cart-button">Cart</button>
                 </div>
             </div>
             <div class="line"></div>
-            <div id="login-page">
+            <div id="login-page" class="page">
                     <img src="login-image.png" class="login-image">
-                    <div id="login-info">
+                    <div id="login-info"> 
                         <h1>Log in to HijabLuxe</h1>
                         <p>Enter your details below</p>
                     
@@ -39,7 +39,7 @@
                         </div>
                     </div>
             </div>
-            <div id="sign-up-page">
+            <div id="sign-up-page" class="page">
                 <img src="login-image.png" class="login-image">
                 <div id="sign-up-info">
                     <h1>Create an Account</h1>
@@ -58,7 +58,7 @@
                     </div>
                 </div>
             </div>
-            <div id="forget-password-main-page">
+            <div id="forget-password-main-page" class="page">
                 <img src="login-image.png" class="login-image">
                 <div id="forget-main-info">
                     <h1>Forget Password</h1>
@@ -67,7 +67,7 @@
                     <button id="request-code">Request Verification Code</button>
                 </div>
             </div>
-            <div id="forget-password-code-page">
+            <div id="forget-password-code-page" class="page">
                 <img src="login-image.png" class="login-image">
                 <div id="forget-code-info">
                     <h1>Forget Password</h1>
@@ -76,8 +76,8 @@
                     <button id="verify-code">Verify Code</button>
                 </div>
             </div>
-            <div id="main-page">
-                <div id="main-page-header">
+            <div id="main-page" class="page">
+                <div id="main-page-header" >
                     <div id="main-page-button">
                         <button id="bawal-button"><span>Bawal</span><img src="Vector.png"></button>
                         <button id="selendang-button"><span>Selendang</span><img src="Vector.png"></button>
@@ -92,21 +92,21 @@
                 <div id="new-arrival">
                     <h3 id="new-arrival-title">New Arrival</h3>
                     <div id="new-arrival-content">
-                        <div class="products" data-id="1">
+                        <div class="products" data-id="1" data-name="Bawal Pink Kembang" data-price="45">
                             <img src="Pink Kembang BACK.webp" id="pink-kembang">
                             <p>Bawal Pink Kembang</p>
                             <p>$45</p>
                             <img class="star" src="Five star.png">
                             <button class="add-to-cart">Add To Cart</button>
                         </div>
-                        <div class="products" data-id="2">
+                        <div class="products" data-id="2" data-name="Selendang Grey Premium" data-price="80">
                             <img src="Grey Gintih FS.webp" id="grey-gintih">
                             <p>Selendang Grey Premium</p>
                             <p>$80</p>
                             <img class="star" src="Five star.png">
                             <button class="add-to-cart">Add To Cart</button>
                         </div>
-                        <div class="products" data-id="3">
+                        <div class="products" data-id="3" data-name="Selendang Black Mekkah" data-price="80">
                             <img src="Black Jelaga FS.webp" id="grey-gintih">
                             <p>Selendang Black Mekkah</p>
                             <p>$80</p>
@@ -118,21 +118,21 @@
                 <div id="popular-now">
                     <h3 id="popular-now-title">Popular Now</h3>
                     <div id="popular-content">
-                        <div class="products" data-id="4">
+                        <div class="products" data-id="4" data-name="Bawal Brown Husk" data-price="30">
                             <img src="brown husk.webp" id="brown-husk">
                             <p>Bawal Brown Husk</p>
                             <p>$30</p>
                             <img class="star" src="Five star.png">
                             <button class="add-to-cart">Add To Cart</button>
                         </div>
-                        <div class="products" data-id="5">
+                        <div class="products" data-id="5" data-name="Bawal White Sulam" data-price="109">
                             <img src="WHITE PANCAR BACK.webp" id="white-pancar">
                             <p>Bawal White Sulam</p>
                             <p>$109</p>
                             <img class="star" src="Five star.png">
                             <button class="add-to-cart">Add To Cart</button>
                         </div>
-                        <div class="products" data-id="6">
+                        <div class="products" data-id="6" data-name="Selendang Ikatan Lite" data-price="299">
                             <img src="TudungPeople-Ikatan-Lite-03.webp" id="ikatan-style">
                             <p>Selendang Ikatan Lite</p>
                             <p>$299</p>
@@ -160,47 +160,33 @@
                 </div>
             </div>
 
-            <div id="cart-page">
-                <p id="home-cart">Home / Cart</p>
+            <div id="cart-page" class="page">
+                <h3 id="home-cart">Cart</h3>
                 <div id="cart">
                     <table>
-                        <tr>
-                            <th>Product</th>
-                            <th>Price</th>
-                            <th>Quantity</th>
-                            <th>Subtotal</th>
-                        </tr>
-                        <tr>
-                            <td>Bawal Premium Mekwa</td>
-                            <td>$23.30</td>
-                            <td>1</td>
-                            <td>$23.30</td>
-                        </tr>
-                        <tr>
-                            <td>Bawal Premium A</td>
-                            <td>$45</td>
-                            <td>1</td>
-                            <td>$45</td>                          
-                        </tr>
+                        <thead>
+                            <tr>
+                                <th>Product</th>
+                                <th>Price</th>
+                                <th>Quantity</th>
+                                <th>Subtotal</th>
+                            </tr>
+                        </thead>
+                        <tbody id="cart-items">
+
+                        </tbody>
                     </table>
                 </div>
-                <div id="return-update-button">
+                <div id="return-button">
                     <button id="return-shop">Return To Shop</button>
-                    <button id="update-cart">Update Cart</button>
                 </div>
                 <div id="cart-bottom">
-                    <div id="apply-coupon">
-                        <input placeholder="Coupon Code"></input>
-                        <button id="apply-coupon">Apply Coupon</button>
-                    </div>
                     <div id="cart-total">
                         <h3>Cart Total</h3>
                         <p>Subtotal:</p>
-                        <p></p>
-                        <p>Shipping:</p>
-                        <p></p>
+                        <p id="subtotal"></p>
                         <p>Total:</p>
-                        <p></p>
+                        <p id="total"></p>
                         <button id="proceed-checkout-button">Proceed to Checkout</button>
                     </div>
                 </div>
