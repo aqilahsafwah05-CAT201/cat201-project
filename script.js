@@ -1,7 +1,7 @@
 const signUpBtn = document.getElementById("signup-button");
 const profileBtn = document.getElementById("profile-button");
 const cartBtn = document.getElementById("cart-button");
-const isLoggedIn = true;
+const isLoggedIn = false;
 
 if(isLoggedIn){
     signUpBtn.style.display = 'none';
@@ -171,14 +171,15 @@ document.querySelectorAll('.add-to-cart').forEach(button => {
 });
 
 function removeFromCart(id) {
-  // Filter out the item with this id
-  cart = cart.filter(item => item.id !== id);
+    if (!confirm("Are you sure you want to remove this item?")) return;
+    // Filter out the item with this id
+    cart = cart.filter(item => item.id !== id);
 
-  // Save updated cart
-  saveCart();
+    // Save updated cart
+    saveCart();
 
-  // Re-render table
-  renderCart();
+    // Re-render table
+    renderCart();
 }
 
 
@@ -188,3 +189,26 @@ returnMain.addEventListener("click",()=>{
     cartPage.style.display = "none";
     mainPage.style.display = "flex";
 })
+
+const squareBtn = document.getElementById("square-button");
+const shawlBtn = document.getElementById("shawl-button");
+const innerCapBtn = document.getElementById("innerCap-button");
+const squarePage = document.getElementById("square-page");
+const shawlPage = document.getElementById("shawl-page");
+const innercapPage = document.getElementById("innercap-page");
+
+squareBtn.addEventListener("click",()=>{
+  mainPage.style.display = "none";
+  squarePage.style.display = "flex";
+})
+
+shawlBtn.addEventListener("click", () =>{
+  mainPage.style.display = "none";
+  shawlPage.style.display = "flex";
+})
+
+innerCapBtn.addEventListener("click", ()=>{
+  mainPage.style.display = "none";
+  innercapPage.style.display = "flex";
+})
+

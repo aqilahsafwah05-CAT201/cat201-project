@@ -237,8 +237,8 @@ html {
   margin-right: 50px;
 }
 
-#bawal-button,
-#selendang-button,
+#square-button,
+#shawl-button,
 #innerCap-button{
     display: flex;
     border: 0;
@@ -250,14 +250,13 @@ html {
 }
 
 
-#bawal-button:hover,
-#selendang-button:hover,
+#square-button:hover,
+#shawl-button:hover,
 #innerCap-button:hover{
     opacity: 0.8;
 }
 
-#new-arrival-title,
-#popular-now-title{
+.title{
     margin-left: 180px;
 }
 
@@ -277,14 +276,14 @@ html {
 }
 
 
-#pink-kembang,
-#grey-gintih,
-#black-jelaga,
-#brown-husk,
-#white-pancar,
-#ikatan-style{
+
+.pic{
     height: 280px;
     width: 200px;
+}
+
+.pic:hover{
+    transform: scale(1.1); 
 }
 
 .products{
@@ -399,3 +398,33 @@ th,td{
     gap: 20px;
 }
 
+#square-page,
+#shawl-page,
+#innercap-page{
+    flex-direction: column;
+    margin-top: 30px;
+    margin-bottom: 200px;
+    justify-content: center;
+}
+
+#square-product,
+#shawl-product,
+#innercap-product{
+    display: grid;
+    justify-items: center;
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    padding-top: 30px;
+    max-width: 1000px;
+    margin: 0 auto;
+    gap: 30px;
+}
+
+.add-to-cart{
+    height: 30px;
+    width: 100px;
+}
+
+.middle-title{
+    display: flex;
+    justify-content: center;
+}
