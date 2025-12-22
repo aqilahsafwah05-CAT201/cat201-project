@@ -3,10 +3,11 @@ const loginBtn = document.getElementById("login-button");
 const profileBtn = document.getElementById("profile-button");
 const cartBtn = document.getElementById("cart-button");
 
-const isLoggedIn = false;
+const isLoggedIn = true;
 
 if(isLoggedIn){
     signUpBtn.style.display = 'none';
+    loginBtn.style.display = 'none';
     profileBtn.style.display = 'inline-block';
     cartBtn.style.display = "inline-block";
 }
@@ -249,4 +250,42 @@ innerCapBtn.addEventListener("click", ()=>{
 })
 
 
+
+const proceedCheckOutBtn = document.getElementById("proceed-checkout-button");
+const checkOutPage = document.getElementById("checkout-page");
+
+proceedCheckOutBtn.addEventListener("click",() =>{
+  showCheckOutPage();
+})
+
+function showCheckOutPage(){
+  const pages = document.querySelectorAll(".page");
+
+  pages.forEach(page=>{
+    page.style.display ="none";
+  })
+
+  checkOutPage.style.display = "flex";
+
+}
+
+
+const profilePage = document.getElementById("profile-page");
+
+// Link the profile button to the function
+profileBtn.addEventListener("click", () => {
+    showProfilePage();
+});
+
+function showProfilePage() {
+    const pages = document.querySelectorAll(".page");
+    
+    // Hide all other pages
+    pages.forEach(page => {
+        page.style.display = "none";
+    });
+
+    // Show the profile page
+    profilePage.style.display = "flex"; 
+}
 
