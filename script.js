@@ -3,10 +3,11 @@ const loginBtn = document.getElementById("login-button");
 const profileBtn = document.getElementById("profile-button");
 const cartBtn = document.getElementById("cart-button");
 
-const isLoggedIn = false;
+const isLoggedIn = true;
 
 if(isLoggedIn){
     signUpBtn.style.display = 'none';
+    loginBtn.style.display = 'none';
     profileBtn.style.display = 'inline-block';
     cartBtn.style.display = "inline-block";
 }
