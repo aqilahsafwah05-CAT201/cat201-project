@@ -484,7 +484,7 @@
 
                     <tr>
 
-                        <th>model.Product</th>
+                        <th>Product</th>
 
                         <th>Qty</th>
 
