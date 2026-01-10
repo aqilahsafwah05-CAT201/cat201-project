@@ -4,6 +4,7 @@
   <component name="FrameworkDetectionExcludesConfiguration">
     <file type="web" url="file://$PROJECT_DIR$/.smarttomcat/cat201-project/conf/web.xml" />
     <file type="web" url="file://$PROJECT_DIR$/.smarttomcat/HijabLuxe/conf/web.xml" />
+    <file type="web" url="file://$PROJECT_DIR$/src/main/webapp/web/WEB-INF/web.xml" />
   </component>
   <component name="MavenProjectsManager">
     <option name="originalFiles">
