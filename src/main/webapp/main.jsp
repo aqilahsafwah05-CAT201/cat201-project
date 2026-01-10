@@ -244,6 +244,13 @@
             <!-- Main Page -->
 
             <div id="main-page" class="page">
+                <!-- HERO SECTION NEW -->
+                <div style="text-align: center; padding: 60px 0 30px 0;">
+                    <h1 style="font-size: 52px; color: #2C3E50; margin: 0;">
+                        Discover Elegant <span style="color: #8F4E68;">Hijabs</span>
+                    </h1>
+                    <p style="color: #7D7D7D; font-size: 18px; margin-top: 10px;">Premium quality hijabs for every occasion</p>
+                </div>
                 <div id="main-page-header" >
                     <div id="main-page-button">
                         
@@ -251,7 +258,7 @@
                         <button id="shawl-button"><span>Shawl</span><img src="image/Vector.png"></button>
                         <button id="innerCap-button"><span>Inner Cap</span><img src="image/Vector.png"></button>
                     </div>
-                    <div class="v-line"></div>
+
                     <div>
                         <img src="image/main-page.webp" id="main-page-1">
 
@@ -260,7 +267,7 @@
 
                 <!-- New Arrival Section -->
                 <div id="new-arrival">
-                    <h3 class="title">New Arrival</h3>
+                    <h2 style="color: #2C3E50; text-align: center; font-size: 28px;">New Arrival</h2>
                     <div id="new-arrival-content">
                         <div class="products" data-id="1" data-name="square Pink Kembang" data-price="45">
                             <img src="image/Pink%20Kembang%20BACK.webp" id="pink-kembang" class="pic">
