@@ -268,7 +268,7 @@
                             <p>$45</p>
                             <img class="star" src="image/Five%20star.png">
                             <button class="add-to-cart-btn">
-                                <i class="fas fa-cart-plus"></i> Add To Cart</button>
+                                <button class="add-to-cart">Add To Cart</button>
                         </div>
                         <div class="products" data-id="2" data-name="shawl Grey Premium" data-price="80">
                             <img src="image/Grey%20Gintih%20FS.webp" id="grey-gintih" class="pic">
