@@ -66,7 +66,7 @@
                     <div id="login-info"> 
                         <h1>Log in to HijabLuxe</h1>
                         <p>Enter your details below</p>
-                            <form id="login-form" method="post" action="index.jsp">
+                            <form id="login-form" method="post" action="main.jsp">
                                 <input type="email" id="login-email" name="login_email" placeholder="Email" required>
                                 <input type="password" id="login-password" name="login_password" placeholder="Password" required>
                                 <input type="submit" value="Log In"> 
@@ -86,7 +86,7 @@
                 <div id="sign-up-info">
                     <h1>Create an Account</h1>
                     <p>Enter your details below</p>
-                        <form id="sign-up-form" method="post" action="index_test.jsp">
+                        <form id="sign-up-form" method="post" action="main.jsp">
                             <input type="text" id="sign-up-name" name="signup_name" placeholder="Name" required>
                             <input type="email" id="sign-up-email" name="signup_email" placeholder="Email" required>
                             <input type="password" name="signup_password" placeholder="Password" required>
