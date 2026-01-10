@@ -2,15 +2,31 @@ const signUpBtn = document.getElementById("signup-button");
 const loginBtn = document.getElementById("login-button");
 const profileBtn = document.getElementById("profile-button");
 const cartBtn = document.getElementById("cart-button");
+const logoutBtn = document.getElementById("logout-button");
 
-const isLoggedIn = false;
+// Change 'const' to 'var' so we can update it from main.jsp
+var isLoggedIn = false; 
 
-if(isLoggedIn){
-    signUpBtn.style.display = 'none';
-    loginBtn.style.display = 'none';
-    profileBtn.style.display = 'inline-block';
-    cartBtn.style.display = "inline-block";
+// Wrap the button logic in a function so we can call it anytime
+function updateAuthUI() {
+    if(isLoggedIn){
+        signUpBtn.style.display = 'none';
+        loginBtn.style.display = 'none';
+        profileBtn.style.display = 'inline-block';
+        cartBtn.style.display = "inline-block";
+        logoutBtn.style.display = 'inline-block';
+    } else {
+        // Optional: Ensure the reverse happens if logged out
+        signUpBtn.style.display = 'inline-block';
+        loginBtn.style.display = 'inline-block';
+        profileBtn.style.display = 'none';
+        logoutBtn.style.display = 'none';
+        // cartBtn.style.display = "none"; // Keep cart hidden if not logged in? Up to you.
+    }
 }
+
+// Run it once on load
+updateAuthUI();
 
 const mainPage = document.getElementById("main-page");
 const loginPage = document.getElementById("login-page");

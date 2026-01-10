@@ -1,37 +1,74 @@
 <%@ page import="com.example.hijabluxe.Cart" %>
 <%@ page import="com.example.hijabluxe.Product" %>
-<%@ page import="com.example.hijabluxe.Product" %>
 <%@ page import="com.example.hijabluxe.User" %>
 <%
-    // Login
+    // --- 0. HANDLE LOGOUT (Must be first!) ---
+    String action = request.getParameter("action");
+    if("logout".equals(action)) {
+        session.invalidate(); // Destroys the session (logs you out)
+        response.sendRedirect("main.jsp"); // Reloads the page fresh
+        return; // Stops the rest of the code from running
+    }
+
+    // --- 1. GET DATA FROM FORMS ---
     String loginEmail = request.getParameter("login_email");
     String loginPassword = request.getParameter("login_password");
     
-    // Signup
     String signupName = request.getParameter("signup_name");
     String signupEmail = request.getParameter("signup_email");
     String signupPassword = request.getParameter("signup_password");
-    
-    // Checkout
+
+    // --- 2. HANDLE SIGN UP (Save to "Memory" instead of Database) ---
+    if(signupName != null && signupEmail != null && signupPassword != null) {
+        // We save the details into the SESSION. 
+        // This acts like a temporary database while the browser is open.
+        session.setAttribute("DB_EMAIL", signupEmail);
+        session.setAttribute("DB_PASS", signupPassword);
+        session.setAttribute("DB_NAME", signupName);
+    }
+
+    // --- 3. HANDLE LOGIN (Check against "Memory") ---
+    String loginMessage = ""; // To store success/fail message
+    User currentUser = (User) session.getAttribute("user"); // Check if someone is already logged in
+
+    if(loginEmail != null && loginPassword != null) {
+        // Retrieve the user we just signed up from memory
+        String storedEmail = (String) session.getAttribute("DB_EMAIL");
+        String storedPass = (String) session.getAttribute("DB_PASS");
+        String storedName = (String) session.getAttribute("DB_NAME");
+
+        // Check if the typed email matches the stored email
+        if(storedEmail != null && loginEmail.equals(storedEmail) && loginPassword.equals(storedPass)) {
+            // SUCCESS! Create a user object and log them in
+            // (Assuming your User class has a constructor like this, if not, remove the User object part)
+            // User newUser = new User(storedName, storedEmail, storedPass); 
+            // session.setAttribute("user", newUser);
+            
+            // For now, just use a simple session flag for the assignment
+            session.setAttribute("isLoggedIn", "true");
+            session.setAttribute("currentUserName", storedName);
+            loginMessage = "Login Successful! Welcome back, " + storedName;
+        } else {
+            loginMessage = "Error: Wrong email or password (or user not found).";
+        }
+    }
+
+    // --- 4. CHECKOUT LOGIC ---
     String checkoutEmail = request.getParameter("email");
     String checkoutPhone = request.getParameter("phone");
     String checkoutPayment = request.getParameter("payment_method");
-
-    if(checkoutEmail != null && checkoutPayment != null) {
-            out.println("Order completed! Email: " + checkoutEmail + ", Payment: " + checkoutPayment);
-        }
-
     String checkoutFullName = request.getParameter("full_name");
     String checkoutAddress = request.getParameter("address_line1");
     String checkoutCity = request.getParameter("city");
     String checkoutState = request.getParameter("State");
     String checkoutPostcode = request.getParameter("postcode");
 
-    // Cart
-    Cart cart = (Cart) session.getAttribute("cart");
+    if(checkoutEmail != null && checkoutPayment != null) {
+           out.println("Order completed for: " + checkoutEmail);
+    }
 
-    //User
-    User user = (User) session.getAttribute("user");
+    // --- 5. SETUP CART ---
+    Cart cart = (Cart) session.getAttribute("cart");
 %>
 
 <!DOCTYPE html> 
@@ -53,11 +90,11 @@
                 <div id="nav-bar-button">
                     <button id="home-button">Home</button>
                     <a href="#footer-part" id="contact-button">Contact</a>
-                    <button id="about-button">About</button>
                     <button id="signup-button">Sign Up</button>
                     <button id="login-button">Log In</button>
                     <button id="profile-button">Profile</button>
                     <button id="cart-button">Cart</button>
+                    <a href="main.jsp?action=logout" id ="logout-button" style="text-decoration: none; color: rgb(171, 31, 31); padding: 8px 16px">Log Out</a>
                 </div>
             </div>
             <div class="line"></div>
@@ -73,9 +110,12 @@
                                 <button id="forget-password-login">Forget Password?</button>
                             </form>
 
-                            <% if(loginEmail != null && loginPassword != null) { %>
-                                <div style="background-color: #d4edda; padding: 10px; margin: 10px 0;">
-                                    Logged in as: <%= loginEmail %>
+                            <% if(loginMessage != null && !loginMessage.isEmpty()) { %>
+                                <div style="padding: 10px; margin: 10px 0; border-radius: 5px; 
+                                    background-color: <%= loginMessage.contains("Error") ? "#f8d7da" : "#d4edda" %>; 
+                                    color: <%= loginMessage.contains("Error") ? "#721c24" : "#155724" %>;">
+                                    
+                                    <%= loginMessage %>
                                 </div>
                             <% } %>
                        
@@ -581,5 +621,50 @@
             </div>
         </div>
         <script src="script.js"></script>
+
+    <script>
+        // --- CONNECT JAVA SESSION TO JAVASCRIPT ---
+        <% 
+            // Check if our Java session has the "isLoggedIn" flag we set earlier
+            if(session.getAttribute("isLoggedIn") != null) { 
+        %>
+            // If Java says yes, we tell JavaScript to set it to true
+            isLoggedIn = true;
+            updateAuthUI(); // Call the function we just made in script.js
+        <% } %>
+
+
+        // --- KEEP THE CORRECT TAB OPEN AFTER RELOAD ---
+        
+        <% if(request.getParameter("signup_email") != null) { %>
+            // 1. Show a popup so they know it worked
+            alert("Account successfully created! Please log in.");
+
+            // 2. Send them directly to the Login Page
+            showLogInPage(); 
+            
+            // 3. Optional: Pre-fill the email box for them (Bonus UX!)
+            document.getElementById("login-email").value = "<%= signupEmail %>";
+        <% } %>
+
+        <% if(request.getParameter("login_email") != null) { %>
+            <%-- Check if the login message indicates Success --%>
+            <% if(loginMessage != null && loginMessage.contains("Success")) { %>
+                
+                // 1. Login Worked: Go straight to Home Page
+                showHomePage();
+                
+                // 2. Optional: Show a popup so they know it worked
+                alert("Login Successful! Welcome back.");
+
+            <% } else { %>
+                
+                // 3. Login Failed: Stay on Login Page to show the Red Error Box
+                showLogInPage();
+                
+            <% } %>
+        <% } %>
+    </script>
+
     </body>
 </html>
