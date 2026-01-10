@@ -1,6 +1,8 @@
 <%@ page import="com.example.hijabluxe.Cart" %>
 <%@ page import="com.example.hijabluxe.Product" %>
 <%@ page import="com.example.hijabluxe.User" %>
+<%@ page import="java.util.HashMap" %>
+<%@ page import="java.util.Map" %>
 <%
     // --- 0. HANDLE LOGOUT (Must be first!) ---
     String action = request.getParameter("action");
@@ -11,48 +13,52 @@
     }
 
     // --- 1. GET DATA FROM FORMS ---
-    String loginEmail = request.getParameter("login_email");
-    String loginPassword = request.getParameter("login_password");
-    
-    String signupName = request.getParameter("signup_name");
-    String signupEmail = request.getParameter("signup_email");
-    String signupPassword = request.getParameter("signup_password");
+        String loginEmail = request.getParameter("login_email");
+        String loginPassword = request.getParameter("login_password");
+        
+        String signupName = request.getParameter("signup_name");
+        String signupEmail = request.getParameter("signup_email");
+        String signupPassword = request.getParameter("signup_password");
 
-    // --- 2. HANDLE SIGN UP (Save to "Memory" instead of Database) ---
-    if(signupName != null && signupEmail != null && signupPassword != null) {
-        // We save the details into the SESSION. 
-        // This acts like a temporary database while the browser is open.
-        session.setAttribute("DB_EMAIL", signupEmail);
-        session.setAttribute("DB_PASS", signupPassword);
-        session.setAttribute("DB_NAME", signupName);
-    }
-
-    // --- 3. HANDLE LOGIN (Check against "Memory") ---
-    String loginMessage = ""; // To store success/fail message
-    User currentUser = (User) session.getAttribute("user"); // Check if someone is already logged in
-
-    if(loginEmail != null && loginPassword != null) {
-        // Retrieve the user we just signed up from memory
-        String storedEmail = (String) session.getAttribute("DB_EMAIL");
-        String storedPass = (String) session.getAttribute("DB_PASS");
-        String storedName = (String) session.getAttribute("DB_NAME");
-
-        // Check if the typed email matches the stored email
-        if(storedEmail != null && loginEmail.equals(storedEmail) && loginPassword.equals(storedPass)) {
-            // SUCCESS! Create a user object and log them in
-            // (Assuming your User class has a constructor like this, if not, remove the User object part)
-            // User newUser = new User(storedName, storedEmail, storedPass); 
-            // session.setAttribute("user", newUser);
-            
-            // For now, just use a simple session flag for the assignment
-            session.setAttribute("isLoggedIn", "true");
-            session.setAttribute("currentUserName", storedName);
-            loginMessage = "Login Successful! Welcome back, " + storedName;
-        } else {
-            loginMessage = "Error: Wrong email or password (or user not found).";
+        // --- SETUP THE "MOCK DATABASE" (First time only) ---
+        // We use a HashMap to store many users. Key = Email, Value = {Name, Password}
+        Map<String, String[]> userDB = (Map<String, String[]>) application.getAttribute("userDB");
+        if(userDB == null) {
+            userDB = new HashMap<>();
+            application.setAttribute("userDB", userDB);
         }
-    }
 
+        // --- 2. HANDLE SIGN UP ---
+        if(signupName != null && signupEmail != null && signupPassword != null) {
+            // Create a small array to hold the user's info
+            String[] newUser = { signupName, signupPassword };
+            
+            // Save them into the global map
+            userDB.put(signupEmail, newUser);
+        }
+
+        // --- 3. HANDLE LOGIN ---
+        String loginMessage = ""; 
+        // Check if someone is already logged in (Session check)
+        String currentUserName = (String) session.getAttribute("currentUserName");
+
+        if(loginEmail != null && loginPassword != null) {
+            // Look for the user in our Map using their email
+            String[] foundUser = userDB.get(loginEmail);
+
+            if(foundUser != null && foundUser[1].equals(loginPassword)) {
+                // SUCCESS! Password matches.
+                String storedName = foundUser[0];
+                
+                // Set Session (Wristband)
+                session.setAttribute("isLoggedIn", "true");
+                session.setAttribute("currentUserName", storedName);
+                
+                loginMessage = "Login Successful! Welcome back, " + storedName;
+            } else {
+                loginMessage = "Error: Wrong email or password (or user not found).";
+            }
+        }
     // --- 4. CHECKOUT LOGIC ---
     String checkoutEmail = request.getParameter("email");
     String checkoutPhone = request.getParameter("phone");
@@ -129,7 +135,7 @@
                         <form id="sign-up-form" method="post" action="main.jsp">
                             <input type="text" id="sign-up-name" name="signup_name" placeholder="Name" required>
                             <input type="email" id="sign-up-email" name="signup_email" placeholder="Email" required>
-                            <input type="password" name="signup_password" placeholder="Password" required>
+                            <input type="password" id="sign-up-password" name="signup_password" placeholder="Password" required>
                             <div id="create-button">
                                 <input type="submit" id="create-account-button" value="Create Account">
                                 <p>or</p>
