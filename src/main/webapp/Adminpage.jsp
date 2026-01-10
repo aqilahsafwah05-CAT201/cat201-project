@@ -1,4 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
+<%@ page import="java.util.Map" %>
+<%@ page import="java.util.List" %>       
+<%@ page import="java.util.ArrayList" %>
 <%
     String contextPath = request.getContextPath();
     if (contextPath == null || contextPath.isEmpty()) {
@@ -131,15 +134,49 @@
                 <h2 class="block-title">📦 Recent Orders</h2>
                 <div class="table-wrapper">
                     <table>
-                        <thead>
-                            <tr>
-                                <th>Order ID</th>
-                                <th>Customer</th>
-                                <th>Amount</th>
-                                <th>Status</th>
+                <thead>
+                            <tr style="background-color: #DB4444; color: white;">
+                                <th style="padding: 12px; border: 1px solid #ddd;">Customer Name</th>
+                                <th style="padding: 12px; border: 1px solid #ddd;">Email</th>
+                                <th style="padding: 12px; border: 1px solid #ddd;">Address</th>
+                                <th style="padding: 12px; border: 1px solid #ddd;">Payment</th>
+                                <th style="padding: 12px; border: 1px solid #ddd;">Total</th>
+                                <th style="padding: 12px; border: 1px solid #ddd;">Status</th>
                             </tr>
                         </thead>
-                        <tbody id="orders-table-body">
+                <tbody>
+                            <%
+                                // 1. Retrieve the Global Order List from Server Memory
+                                List<String[]> adminOrderList = (List<String[]>) application.getAttribute("orderDB");
+
+                                if(adminOrderList != null && !adminOrderList.isEmpty()) {
+                                    // Loop backwards so the NEWEST orders show at the TOP
+                                    for(int i = adminOrderList.size() - 1; i >= 0; i--) {
+                                        String[] order = adminOrderList.get(i);
+                            %>
+                                <tr style="background-color: white;">
+                                    <td style="padding: 12px; border: 1px solid #ddd;"><strong><%= order[0] %></strong></td> <td style="padding: 12px; border: 1px solid #ddd;"><%= order[1] %></td> <td style="padding: 12px; border: 1px solid #ddd;">
+                                        <%= order[2] %>, <%= order[3] %>
+                                    </td> <td style="padding: 12px; border: 1px solid #ddd;"><%= order[4].toUpperCase() %></td> <td style="padding: 12px; border: 1px solid #ddd; color: green; font-weight: bold;">
+                                        <%= order[5] %>
+                                    </td> <td style="padding: 12px; border: 1px solid #ddd; text-align: center;">
+                                        <span style="background: #fff3cd; color: #856404; padding: 5px 10px; border-radius: 15px; font-size: 12px;">
+                                            Processing
+                                        </span>
+                                    </td>
+                                </tr>
+                            <%
+                                    }
+                                } else {
+                            %>
+                                <tr>
+                                    <td colspan="6" style="text-align: center; padding: 20px; color: #666; background: white;">
+                                        No orders placed yet.
+                                    </td>
+                                </tr>
+                            <%
+                                }
+                            %>
                         </tbody>
                     </table>
                 </div>
@@ -151,77 +188,43 @@
                     <table>
                         <thead>
                             <tr>
-                                <th>Name</th>
-                                <th>Email</th>
-                                <th>Total Spent</th>
+                                <th>Email (Login ID)</th>
+                                <th>User Name</th>
+                                <th>Password</th> <th>Status</th>
                             </tr>
                         </thead>
                         <tbody>
-                            <tr>
-                                <td>Syarifah Asri</td>
-                                <td>syarifah@email.com</td>
-                                <td>$450.00</td>
-                            </tr>
+                            <%
+                                // 1. Retrieve the Global User Database from Application Memory
+                                Map<String, String[]> adminDB = (Map<String, String[]>) application.getAttribute("userDB");
+
+                                if(adminDB != null && !adminDB.isEmpty()) {
+                                    // 2. Loop through every user found
+                                    for(String emailKey : adminDB.keySet()) {
+                                        String[] details = adminDB.get(emailKey);
+                            %>
+                                <tr>
+                                    <td><%= emailKey %></td>
+                                    <td><%= details[0] %></td>
+                                    <td><%= details[1] %></td>
+                                    <td><span class="status-badge">Active</span></td>
+                                </tr>
+                            <%
+                                    }
+                                } else {
+                            %>
+                                <tr>
+                                    <td colspan="4" style="text-align: center; color: #666;">
+                                        No users registered yet. Go to Sign Up page first.
+                                    </td>
+                                </tr>
+                            <%
+                                }
+                            %>
                         </tbody>
-                        <tbody>
-                            <tr>
-                                <td>Nurul Safwan</td>
-                                <td>nurul@email.com</td>
-                                <td>$50.00</td>
-                            </tr>
-                        </tbody>
-                        <tbody>
-                            <tr>
-                                <td>Aqilah Azwan</td>
-                                <td>aqilah@email.com</td>
-                                <td>$250.00</td>
-                            </tr>
-                        </tbody>
-                        <tbody>
-                            <tr>
-                                <td>Safwah Mohd</td>
-                                <td>safwah@email.com</td>
-                                <td>$70.00</td>
-                            </tr>
-                        </tbody>
-                        <tbody>
-                            <tr>
-                                <td>Puteri Sahimi</td>
-                                <td>puteri@email.com</td>
-                                <td>$500.00</td>
-                            </tr>
-                        </tbody>
-                        <tbody>
-                            <tr>
-                                <td>Arinah Sulaiman</td>
-                                <td>arinah@email.com</td>
-                                <td>$79.00</td>
-                            </tr>
-                        </tbody>
-                        <tbody>
-                            <tr>
-                                <td>Shafiqa haikal</td>
-                                <td>shafiqa@email.com</td>
-                                <td>$380.00</td>
-                            </tr>
-                        </tbody>
-                        <tbody>
-                            <tr>
-                                <td>siti mohd</td>
-                                <td>siti@email.com</td>
-                                <td>$600.00</td>
-                            </tr>
-                        </tbody>
-                        <tbody>
-                            <tr>
-                                <td>haida nasir</td>
-                                <td>haida@email.com</td>
-                                <td>$390.00</td>
-                            </tr>
-                        </tbody>
-                    </table>
-                </div>
-            </section>
+                </table>
+            <a href="main.jsp" class="home-btn">← Back to Shop</a>
+        </section>
 
             <section id="logout-section" class="admin-block">
                 <div class="logout-container">

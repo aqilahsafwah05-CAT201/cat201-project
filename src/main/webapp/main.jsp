@@ -3,78 +3,156 @@
 <%@ page import="com.example.hijabluxe.User" %>
 <%@ page import="java.util.HashMap" %>
 <%@ page import="java.util.Map" %>
+<%@ page import="java.util.List" %>     
+<%@ page import="java.util.ArrayList" %>
+
 <%
     // --- 0. HANDLE LOGOUT (Must be first!) ---
     String action = request.getParameter("action");
     if("logout".equals(action)) {
-        session.invalidate(); // Destroys the session (logs you out)
-        response.sendRedirect("main.jsp"); // Reloads the page fresh
-        return; // Stops the rest of the code from running
+        session.invalidate(); 
+        response.sendRedirect("main.jsp"); 
+        return; 
     }
 
     // --- 1. GET DATA FROM FORMS ---
-        String loginEmail = request.getParameter("login_email");
-        String loginPassword = request.getParameter("login_password");
-        
-        String signupName = request.getParameter("signup_name");
-        String signupEmail = request.getParameter("signup_email");
-        String signupPassword = request.getParameter("signup_password");
+    String loginEmail = request.getParameter("login_email");
+    String loginPassword = request.getParameter("login_password");
+    
+    String signupName = request.getParameter("signup_name");
+    String signupEmail = request.getParameter("signup_email");
+    String signupPassword = request.getParameter("signup_password");
 
-        // --- SETUP THE "MOCK DATABASE" (First time only) ---
-        // We use a HashMap to store many users. Key = Email, Value = {Name, Password}
-        Map<String, String[]> userDB = (Map<String, String[]>) application.getAttribute("userDB");
-        if(userDB == null) {
-            userDB = new HashMap<>();
-            application.setAttribute("userDB", userDB);
+    // --- SETUP THE "MOCK DATABASE" (First time only) ---
+    Map<String, String[]> userDB = (Map<String, String[]>) application.getAttribute("userDB");
+    if(userDB == null) {
+        userDB = new HashMap<>();
+        application.setAttribute("userDB", userDB);
+    }
+
+    // --- 2. HANDLE SIGN UP ---
+    if(signupName != null && signupEmail != null && signupPassword != null) {
+        String[] newUser = { signupName, signupPassword };
+        userDB.put(signupEmail, newUser);
+    }
+
+    // --- 3. HANDLE LOGIN ---
+    String loginMessage = ""; 
+    String currentUserName = (String) session.getAttribute("currentUserName");
+
+    if(loginEmail != null && loginPassword != null) {
+        String[] foundUser = userDB.get(loginEmail);
+
+        if(foundUser != null && foundUser[1].equals(loginPassword)) {
+            String storedName = foundUser[0];
+            session.setAttribute("isLoggedIn", "true");
+            session.setAttribute("currentUserName", storedName);
+            loginMessage = "Login Successful! Welcome back, " + storedName;
+        } else {
+            loginMessage = "Error: Wrong email or password (or user not found).";
         }
+    }
 
-        // --- 2. HANDLE SIGN UP ---
-        if(signupName != null && signupEmail != null && signupPassword != null) {
-            // Create a small array to hold the user's info
-            String[] newUser = { signupName, signupPassword };
-            
-            // Save them into the global map
-            userDB.put(signupEmail, newUser);
-        }
-
-        // --- 3. HANDLE LOGIN ---
-        String loginMessage = ""; 
-        // Check if someone is already logged in (Session check)
-        String currentUserName = (String) session.getAttribute("currentUserName");
-
-        if(loginEmail != null && loginPassword != null) {
-            // Look for the user in our Map using their email
-            String[] foundUser = userDB.get(loginEmail);
-
-            if(foundUser != null && foundUser[1].equals(loginPassword)) {
-                // SUCCESS! Password matches.
-                String storedName = foundUser[0];
-                
-                // Set Session (Wristband)
-                session.setAttribute("isLoggedIn", "true");
-                session.setAttribute("currentUserName", storedName);
-                
-                loginMessage = "Login Successful! Welcome back, " + storedName;
-            } else {
-                loginMessage = "Error: Wrong email or password (or user not found).";
-            }
-        }
-    // --- 4. CHECKOUT LOGIC ---
+    // --- 4. CHECKOUT LOGIC (Save Order to Global Admin List) ---
     String checkoutEmail = request.getParameter("email");
-    String checkoutPhone = request.getParameter("phone");
     String checkoutPayment = request.getParameter("payment_method");
     String checkoutFullName = request.getParameter("full_name");
     String checkoutAddress = request.getParameter("address_line1");
     String checkoutCity = request.getParameter("city");
+    String checkoutPhone = request.getParameter("phone");
     String checkoutState = request.getParameter("State");
     String checkoutPostcode = request.getParameter("postcode");
 
-    if(checkoutEmail != null && checkoutPayment != null) {
-           out.println("Order completed for: " + checkoutEmail);
+    // Calculate Total
+    Cart sessionCart = (Cart) session.getAttribute("cart");
+    String totalAmount = "0.00";
+    if(sessionCart != null) {
+        totalAmount = String.format("%.2f", sessionCart.getTotalPrice());
     }
 
-    // --- 5. SETUP CART ---
-    Cart cart = (Cart) session.getAttribute("cart");
+    if(checkoutEmail != null && checkoutPayment != null) {
+        List<String[]> orderDB = (List<String[]>) application.getAttribute("orderDB");
+        if(orderDB == null) {
+            orderDB = new ArrayList<>();
+            application.setAttribute("orderDB", orderDB);
+        }
+
+        String[] newOrder = { 
+            checkoutFullName, 
+            checkoutEmail, 
+            checkoutAddress, 
+            checkoutCity, 
+            checkoutPayment, 
+            "RM " + totalAmount 
+        };
+        
+        orderDB.add(newOrder);
+        session.removeAttribute("cart"); 
+%>
+        <%-- JUMP OUT TO JAVASCRIPT --%>
+        <script>
+            alert("✅ Order Placed Successfully! Your items will be shipped to <%= checkoutCity %>.");
+            window.location.href = "main.jsp"; 
+        </script>
+<%
+    // JUMP BACK INTO JAVA
+    }
+
+    // --- 0.5 HANDLE ADD TO CART ---
+    if("add".equals(action)) {
+        String pId = request.getParameter("id");
+        String pName = request.getParameter("name");
+        String pPrice = request.getParameter("price");
+        
+        // 1. Get or Create Cart
+        Cart myCart = (Cart) session.getAttribute("cart");
+        if(myCart == null) {
+            myCart = new Cart(); // This works if you added the empty constructor to Cart.java
+            session.setAttribute("cart", myCart);
+        }
+        
+        // 2. Add item (Using ONLY 3 Arguments)
+        if(pId != null && pName != null && pPrice != null) {
+            double priceVal = Double.parseDouble(pPrice);
+            
+            // ✅ THIS LINE MUST MATCH YOUR Product.java CONSTRUCTOR
+            Product p = new Product(Integer.parseInt(pId), pName, priceVal); 
+            
+            myCart.addItem(p);
+        }
+        
+        %>
+        <script>
+            alert("✅ Added <%= pName %> to cart!");
+            window.location.href = "main.jsp"; 
+        </script>
+        <%
+        return; 
+    }
+
+    /// --- 0.6 HANDLE REMOVE FROM CART ---
+    if("remove".equals(action)) {
+        String idToRemove = request.getParameter("id");
+        
+        Cart myCart = (Cart) session.getAttribute("cart");
+        if(myCart != null && idToRemove != null) {
+            int id = Integer.parseInt(idToRemove);
+            
+            // Loop through and find the item to remove
+            java.util.Iterator<Product> iter = myCart.getItems().iterator();
+            while (iter.hasNext()) {
+                Product p = iter.next();
+                if (p.getId() == id) {
+                    iter.remove();
+                    break; 
+                }
+            }
+        }
+        
+        // ✅ CORRECT WAY: Just redirect back to the cart view
+        response.sendRedirect("main.jsp?view=cart");
+        return;
+    }
 %>
 
 <!DOCTYPE html> 
@@ -356,65 +434,87 @@
                 </div>
             </div>
 
-            <div id="cart-page" class="page">
+    <div id="cart-page" class="page">
+        <h3 id="home-cart">Cart</h3>
+        
+        <div id="cart">
+    <table>
+        <thead>
+            <tr>
+                <th>Product</th>
+                <th>Price</th>
+                <th>Quantity</th>
+                <th>Subtotal</th>
+                <th>Action</th> </tr>
+        </thead>
+        <tbody id="cart-items">
             <%
-                if(cart != null) {
-                    for(Product p : cart.getItems()) {
+                Cart pageCart = (Cart) session.getAttribute("cart");
+                
+                if(pageCart != null && pageCart.getItems() != null && !pageCart.getItems().isEmpty()) {
+                    for(Product p : pageCart.getItems()) {
             %>
             <tr>
                 <td><%= p.getName() %></td>
-                <td>RM<%= p.getPrice() %></td>
-                <td>1</td> <!-- or your cart quantity if you implement it -->
-                <td>RM<%= p.getPrice() %></td>
+                <td>RM <%= String.format("%.2f", p.getPrice()) %></td>
+                <td>1</td>
+                <td>RM <%= String.format("%.2f", p.getPrice()) %></td>
+                
+                <td>
+                    <a href="main.jsp?action=remove&id=<%= p.getId() %>" 
+                       style="color: white; background-color: #DB4444; padding: 5px 10px; text-decoration: none; border-radius: 5px; font-size: 12px;">
+                       Remove
+                    </a>
+                </td>
             </tr>
             <%
                     }
-            %>
-            <tr>
-                <td colspan="3" style="text-align:right;"><strong>Total:</strong></td>
-                <td>RM<%= cart.getTotalPrice() %></td>
-            </tr>
-            <%
                 } else {
             %>
             <tr>
-                <td colspan="4">Your cart is empty</td>
+                <td colspan="5" style="text-align: center; padding: 20px; color: #666;">
+                    Your cart is currently empty.
+                </td>
             </tr>
             <%
                 }
             %>
+        </tbody>
+    </table>
+</div>
 
-                <h3 id="home-cart">Cart</h3>
-                <div id="cart">
-                    <table>
-                        <thead>
-                            <tr>
-                                <th>Product</th>
-                                <th>Price</th>
-                                <th>Quantity</th>
-                                <th>Subtotal</th>
-                            </tr>
-                        </thead>
-                        <tbody id="cart-items">
+    <div id="return-button">
+        <button id="return-shop">Return To Shop</button>
+    </div>
 
-                        </tbody>
-                    </table>
-                </div>
-                <div id="return-button">
-                    <button id="return-shop">Return To Shop</button>
-                </div>
-                <div id="cart-bottom">
-                    <div id="cart-total">
-                        <h3>Cart Total</h3>
-                        <p>Subtotal:</p>
-                        <p id="subtotal"></p>
-                        <p>Total:</p>
-                        <p id="total"></p>
-                        <button id="proceed-checkout-button">Proceed to Checkout</button>
-                    </div>
-                </div>
-            </div>
+    <%-- 4. CART TOTAL SECTION --%>
+    <div id="cart-bottom">
+        <div id="cart-total">
+            <h3>Cart Total</h3>
+            
+            <%
+                // Calculate total safe string (prevents error if cart is null)
+                String displayTotal = "0.00";
+                if(pageCart != null) {
+                    displayTotal = String.format("%.2f", pageCart.getTotalPrice());
+                }
+            %>
 
+            <p>Subtotal:</p>
+            <p id="cart-subtotal">RM <%= displayTotal %></p>
+            
+            <p>Total:</p>
+            <p id="cart-total">RM <%= displayTotal %></p>
+            
+            <%-- Only show Checkout Button if cart has items --%>
+            <% if(pageCart != null && !pageCart.getItems().isEmpty()) { %>
+                <button id="proceed-checkout-button">Proceed to Checkout</button>
+            <% } else { %>
+                 <button style="background: grey; cursor: not-allowed;" disabled>Cart Empty</button>
+            <% } %>
+        </div>
+    </div>
+</div>
 
 
         <div id="checkout-page" class="page">

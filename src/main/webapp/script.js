@@ -75,8 +75,6 @@ forgetPasswordBtn.addEventListener("click", (event) =>{
 const homeBtn = document.getElementById("home-button");
 const contactBtn = document.getElementById("contact-button");
 const aboutBtn = document.getElementById("about-button");
-//profile button
-//about button
 
 const cartPage = document.getElementById("cart-page");
 
@@ -133,108 +131,22 @@ function showLogInPage(){
     loginPage.style.display = "flex";
 }
 
-// Load cart from localStorage or empty array
-let cart = JSON.parse(localStorage.getItem('cart')) || [];
 
-// Render cart table
-function renderCart() {
-  const tbody = document.getElementById('cart-items');
-  tbody.innerHTML = '';
-
-  let total = 0;
-
-  cart.forEach(item => {
-    const subtotal = item.price * item.quantity;
-    total += subtotal;
-
-    tbody.innerHTML += `
-      <tr>
-        <td>${item.name}</td>
-        <td>$${item.price.toFixed(2)}</td>
-        <td>
-          <input type="number" min="1" value="${item.quantity}"
-            onchange="updateQuantity('${item.id}', this.value)">
-        </td>
-        <td>$${subtotal.toFixed(2)}</td>
-        <td>
-            <button onclick="removeFromCart('${item.id}')">Remove</button>
-        </td>
-      </tr>
-    `;
-  });
-
-  updateTotals(total);
-}
-
-// Update quantity when input changes
-function updateQuantity(id, qty) {
-  const item = cart.find(p => p.id === id);
-  if (item) {
-    item.quantity = Number(qty);
-    saveCart();
-    renderCart();
-  }
-}
-
-// Update subtotal and total
-function updateTotals(subtotal) {
-  document.getElementById('subtotal').textContent = `$${subtotal.toFixed(2)}`;
-  document.getElementById('total').textContent = `$${subtotal.toFixed(2)}`;
-}
-
-// Save cart to localStorage
-function saveCart() {
-  localStorage.setItem('cart', JSON.stringify(cart));
-}
-
-// Add item to cart
-function addToCart(id, name, price) {
-  const existing = cart.find(item => item.id === id);
-  if (existing) {
-    existing.quantity += 1;
-  } else {
-    cart.push({
-      id: id,
-      name: name,
-      price: price,
-      quantity: 1
-    });
-  }
-
-  saveCart();
-  renderCart();
-}
-
-// Render cart on page load
-renderCart();
-
-// Add event listeners to all add-to-cart buttons
+// --- ADD TO CART LOGIC (THE FIX) ---
+// Instead of using localStorage, we send the data to Java!
 document.querySelectorAll('.add-to-cart').forEach(button => {
-  button.addEventListener('click', function () {
-    const product = this.closest('.products'); // matches your HTML
+    button.addEventListener('click', function () {
+        const product = this.closest('.products');
+        
+        // Get data from HTML
+        const id = product.dataset.id;
+        const name = product.dataset.name;
+        const price = product.dataset.price;
 
-    if (!product) return; // safety check
-
-    const id = product.dataset.id;
-    const name = product.dataset.name;
-    const price = Number(product.dataset.price);
-
-    addToCart(id, name, price);
-  });
+        // Redirect to main.jsp with query parameters (Let Java handle it)
+        window.location.href = `main.jsp?action=add&id=${id}&name=${encodeURIComponent(name)}&price=${price}`;
+    });
 });
-
-function removeFromCart(id) {
-    if (!confirm("Are you sure you want to remove this item?")) return;
-    // Filter out the item with this id
-    cart = cart.filter(item => item.id !== id);
-
-    // Save updated cart
-    saveCart();
-
-    // Re-render table
-    renderCart();
-}
-
 
 const returnMain = document.getElementById("return-shop");
 
@@ -315,4 +227,11 @@ function processCheckout(totalAmount) {
 
     fetch("orders", { method: "POST", body: params })
         .then(() => alert("Checkout successful! Order is processing."));
+}
+
+// --- AUTO-OPEN CART ON RELOAD ---
+// This checks if the URL has "?view=cart"
+const urlParams = new URLSearchParams(window.location.search);
+if (urlParams.get('view') === 'cart') {
+    showCartPage();
 }
