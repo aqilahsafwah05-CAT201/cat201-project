@@ -261,7 +261,7 @@ document.addEventListener("DOMContentLoaded", function() {
     document.getElementById('cart-button').addEventListener('click', () => showPage('cart-page'));
 });
 
-document.addEventListener("DOMContentLoaded", function() {
+/*document.addEventListener("DOMContentLoaded", function() {
     // hide all pages except main-page
     const pages = document.querySelectorAll('.page');
     pages.forEach(p => p.style.display = 'none');
@@ -286,6 +286,7 @@ document.addEventListener("DOMContentLoaded", function() {
     document.getElementById('home-button').addEventListener('click', () => showPage('main-page'));
     document.getElementById('cart-button').addEventListener('click', () => showPage('cart-page'));
     });
+*/
 
 // --- FINAL FOOTER FIX ---
 document.querySelectorAll('.footer-link').forEach(link => {

@@ -2,10 +2,12 @@
 <%@ page import="com.example.hijabluxe.Product" %>
 <%@ page import="com.example.hijabluxe.ProductService" %>
 <%@ page import="com.example.hijabluxe.User" %>
+<%@ page import="com.example.hijabluxe.Order" %>
 <%@ page import="java.util.HashMap" %>
 <%@ page import="java.util.Map" %>
 <%@ page import="java.util.List" %>     
 <%@ page import="java.util.ArrayList" %>
+
 
 <%
     // --- FETCH PRODUCTS (Make sure this is OUTSIDE any if-blocks) ---
@@ -442,7 +444,7 @@
 
 
 <div id="checkout-page" class="page">
-    <form method="POST" action="orders">
+    <form method="POST" action="place-order">
         <section id="shipping-details">
             <h2>1. Delivery Details</h2>
             
@@ -565,7 +567,16 @@
         <h1 class="history-title">Order History</h1>
 
         <%
-            // 1. Get the list of orders from the server
+            List<Order> history = (List<Order>) application.getAttribute("globalOrders");
+            if (history == null || history.isEmpty()) {
+        %>
+        <div class="no-orders"><p>You have no recent orders.</p></div>
+        <%
+        } else {
+            for (int i = 0; i < history.size(); i++) {
+                Order ord = history.get(i);
+
+            /*// 1. Get the list of orders from the server
             List<String[]> myHistoryList = (List<String[]>) application.getAttribute("orderDB");
 
             // 2. Check if there are any orders
@@ -581,18 +592,22 @@
                     // order[2] is address
                     // order[3] is state
                     // order[4] is payment
-                    String hTotal = order[5];
+                    String hTotal = order[5];*/
+                    // NEW WAY using the Order class
+
+            // Fetch list from global application scope
         %>
+
 
         <div class="order-card">
             <div class="order-header">
                 <div>
                     <p class="label">Order ID</p>
-                    <p class="value">#ORD-<%= 1000 + i %></p>
+                    <p class="value">#ORD-<%= ord.getId() %></p>
                 </div>
                 <div>
                     <p class="label">Status</p>
-                    <p class="value status-delivered" style="color: #f39c12;">Processing</p>
+                    <p class="value status-delivered" style="color: #f39c12;"><%= ord.getStatus() %></p>
                 </div>
             </div>
 
@@ -607,26 +622,22 @@
                 <tbody>
                     <tr>
                         <td>
-                            <strong><%= hName %></strong><br>
-                            <span style="font-size: 12px; color: #777;"><%= hEmail %></span>
+                            <strong><%= ord.getCustomerName() %></strong><br>
+                            <span style="font-size: 12px; color: #777;"><%= ord.getEmail() %></span>
                         </td>
-                        <td><%= order[4].toUpperCase() %></td>
-                        <td><%= hTotal %></td>
+                        <!-- <td>= order[4].toUpperCase() -->
+                        <td><%= ord.getPaymentMethod() %></td>
+                        <td style="padding: 10px; font-weight: bold;">RM <%= String.format("%.2f", ord.getAmount()) %></td>
                     </tr>
                 </tbody>
             </table>
         </div>
         <% 
                 } // End Loop
-            } else { 
+            } //else {
         %>
         
-        <div style="text-align: center; padding: 40px; color: #666;">
-            <h3>No orders found yet.</h3>
-            <p>Go buy something!</p>
-        </div>
 
-        <% } %>
 
         <button id="return-home-btn" onclick="location.href='main.jsp'">Back to Shopping</button>
     </div>
@@ -645,7 +656,7 @@
                 <div class="sidebar-group">
                     <h3>My Orders</h3>
                     <ul>
-                        <li><a href="#" onclick="showPage('order-history-page')">My History</a></li>
+                        <li><a href="#" id="sidebar-history-link">My History</a></li>
                     </ul>
                 </div>
             </nav>

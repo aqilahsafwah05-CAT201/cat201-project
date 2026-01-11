@@ -147,21 +147,23 @@
                 <tbody>
                             <%
                                 // 1. Retrieve the Global Order List from Server Memory
-                                List<String[]> adminOrderList = (List<String[]>) application.getAttribute("orderDB");
+                                List<com.example.hijabluxe.Order> adminOrders = (List<com.example.hijabluxe.Order>) application.getAttribute("globalOrders");
 
-                                if(adminOrderList != null && !adminOrderList.isEmpty()) {
-                                    // Loop backwards so the NEWEST orders show at the TOP
-                                    for(int i = adminOrderList.size() - 1; i >= 0; i--) {
-                                        String[] order = adminOrderList.get(i);
+                                if(adminOrders != null && !adminOrders.isEmpty()) {
+                                    // Reverse loop to show newest orders first
+                                    for(int i = adminOrders.size() - 1; i >= 0; i--) {
+                                        com.example.hijabluxe.Order o = adminOrders.get(i);
                             %>
+
                                 <tr style="background-color: white;">
-                                    <td style="padding: 12px; border: 1px solid #ddd;"><strong><%= order[0] %></strong></td> <td style="padding: 12px; border: 1px solid #ddd;"><%= order[1] %></td> <td style="padding: 12px; border: 1px solid #ddd;">
-                                        <%= order[2] %>, <%= order[3] %>
-                                    </td> <td style="padding: 12px; border: 1px solid #ddd;"><%= order[4].toUpperCase() %></td> <td style="padding: 12px; border: 1px solid #ddd; color: green; font-weight: bold;">
-                                        <%= order[5] %>
-                                    </td> <td style="padding: 12px; border: 1px solid #ddd; text-align: center;">
+                                    <td><strong><%= o.getCustomerName() %></strong></td>
+                                    <td><%= o.getEmail() %></td>
+                                    <td><%= o.getAddress() %></td>
+                                    <td><%= o.getPaymentMethod().toUpperCase() %></td>
+                                    <td style="color: green; font-weight: bold;">RM <%= String.format("%.2f", o.getAmount()) %></td>
+                                    <td>
                                         <span style="background: #fff3cd; color: #856404; padding: 5px 10px; border-radius: 15px; font-size: 12px;">
-                                            Processing
+                                            <%= o.getStatus() %>
                                         </span>
                                     </td>
                                 </tr>
