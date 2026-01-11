@@ -652,7 +652,6 @@
                     %>
                     <p>Username: <%= (currentUser != null ? currentUser.getUsername() : "Guest") %></p>
                     <p>Email: <%= (currentUser != null ? currentUser.getEmail() : "-") %></p>
-                    <p>Address: <%= (currentUser != null ? currentUser.getAddress() : "-") %></p>
                     <button class="btn-save" onclick="showPage('edit-profile-page')">Edit Profile</button>
                 </div>
             </div>
