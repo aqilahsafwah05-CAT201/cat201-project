@@ -856,10 +856,20 @@ th,td{
     color: #DB4444 !important; /* Signature Red for active page */
 }
 
-.btn-save {
-    position: relative; 
-    z-index: 10;        
-    cursor: pointer;   
+.btn-save, .editbtn {
+    background: #DB4444;
+    color: #FFFFFF;
+    border: none;
+    padding: 16px 48px;
+    border-radius: 4px;
+    font-size: 16px;
+    font-weight: 500;
+    cursor: pointer;
+    transition: background 0.3s;
+}
+
+.editbtn:hover {
+    background: #c13a3a;
 }
 
 /* Profile Form Card Styling */
