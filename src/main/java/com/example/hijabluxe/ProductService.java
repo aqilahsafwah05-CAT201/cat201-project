@@ -25,6 +25,9 @@ public class ProductService {
         productList.add(new Product("Inner Cap Peach", "Inner Cap", 35.0, 10, ""));
         productList.add(new Product("Inner Ninja Premium", "Inner Cap", 29.0, 27, ""));
         productList.add(new Product("Inner Necktie", "Inner Cap", 20.0, 16, ""));
+        productList.add(new Product("Square Pink Kembang", "Square", 45.0, 20, "image/Pink%20Kembang%20BACK.webp"));
+        productList.add(new Product("Shawl Grey Premium", "Shawl", 80.0, 40, "image/Grey%20Gintih%20FS.webp"));
+        productList.add(new Product("shawl Black Mekkah", "Shawl", 80.0, 20, "image/Black%20Jelaga%20FS.webp"));
     }
 
     public static ProductService getInstance() {
