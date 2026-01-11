@@ -119,7 +119,7 @@ loginBtn.addEventListener("click", showLogInPage);
 
 profileBtn.addEventListener("click", showProfilePage);
 
-editBtn.addEventListener("click", showEditProfilePage);
+editbtn.addEventListener("click", showEditProfilePage);
 
 
 const proceedCheckOutBtn = document.getElementById("proceed-checkout-button");

@@ -639,7 +639,7 @@
                     <h3>Manage My Account</h3>
                     <ul>
                         <li><a href="#" class="active-link">My Profile</a></li>
-                    </ul>
+                    </ul>2
                 </div>
                 <div class="sidebar-group">
                     <h3>My Orders</h3>
@@ -657,7 +657,7 @@
                     <p><strong>Username:</strong> <span id="display-username"> </span></p>
                     <p><strong>Email:</strong> <span id="display-email"> </span></p>
                     <p><strong>Address:</strong> <span id="display-address"> </span></p>
-                    <button class="editbtn" onclick="showPage('edit-profile-page')">Edit Profile</button>
+                    <button class="editbtn" >Edit Profile</button>
                 </div>
             </div>
         </main>
