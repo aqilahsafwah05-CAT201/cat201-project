@@ -1,22 +1,11 @@
 <%@ page import="com.example.hijabluxe.Cart" %>
 <%@ page import="com.example.hijabluxe.Product" %>
-<%@ page import="com.example.hijabluxe.ProductService" %>
 <%@ page import="com.example.hijabluxe.User" %>
 <%@ page import="java.util.HashMap" %>
 <%@ page import="java.util.Map" %>
 <%@ page import="java.util.List" %>     
 <%@ page import="java.util.ArrayList" %>
 
-<%
-    // --- 0. PREPARE THE PRODUCTS (Move this to the VERY TOP) ---
-    // This must be outside all IF blocks so the whole page can see it!
-    List<Product> allProducts = ProductService.getInstance().getAllProducts();
-    List<Product> displayList = new ArrayList<>(allProducts);
-    java.util.Collections.reverse(displayList);
-    int max = Math.min(displayList.size(), 3);
-
-
-%>
 <%
     // --- 0. HANDLE LOGOUT (Must be first!) ---
     String action = request.getParameter("action");
@@ -63,111 +52,7 @@
             loginMessage = "Error: Wrong email or password (or user not found).";
         }
     }
-
-    // --- 4. CHECKOUT LOGIC (Save Order to Global Admin List) ---
-    String checkoutEmail = request.getParameter("email");
-    String checkoutPayment = request.getParameter("payment_method");
-    String checkoutFullName = request.getParameter("full_name");
-    String checkoutAddress = request.getParameter("address_line1");
-    String checkoutCity = request.getParameter("city");
-    String checkoutPhone = request.getParameter("phone");
-    String checkoutState = request.getParameter("State");
-    String checkoutPostcode = request.getParameter("postcode");
-
-    // Calculate Total
-    Cart sessionCart = (Cart) session.getAttribute("cart");
-    String totalAmount = "0.00";
-    if(sessionCart != null) {
-        totalAmount = String.format("%.2f", sessionCart.getTotalPrice());
-    }
-
-    if(checkoutEmail != null && checkoutPayment != null) {
-        List<String[]> orderDB = (List<String[]>) application.getAttribute("orderDB");
-        if(orderDB == null) {
-            orderDB = new ArrayList<>();
-            application.setAttribute("orderDB", orderDB);
-        }
-
-        String[] newOrder = { 
-            checkoutFullName, 
-            checkoutEmail, 
-            checkoutAddress, 
-            checkoutCity, 
-            checkoutPayment, 
-            "RM " + totalAmount 
-        };
-
-        orderDB.add(newOrder);
-        session.removeAttribute("cart"); 
 %>
-        <%-- JUMP OUT TO JAVASCRIPT --%>
-        <script>
-            alert("✅ Order Placed Successfully! Your items will be shipped to <%= checkoutCity %>.");
-            window.location.href = "main.jsp"; 
-        </script>
-
-<%
-    // JUMP BACK INTO JAVA
-    }
-
-    // --- 0.5 HANDLE ADD TO CART ---
-    if("add".equals(action)) {
-        String pId = request.getParameter("id");
-        String pName = request.getParameter("name");
-        String pPrice = request.getParameter("price");
-        
-        // 1. Get or Create Cart
-        Cart myCart = (Cart) session.getAttribute("cart");
-        if(myCart == null) {
-            myCart = new Cart(); // This works if you added the empty constructor to Cart.java
-            session.setAttribute("cart", myCart);
-        }
-        
-        // 2. Add item (Using ONLY 3 Arguments)
-        if(pId != null && pName != null && pPrice != null) {
-            double priceVal = Double.parseDouble(pPrice);
-            
-            // ✅ THIS LINE MUST MATCH YOUR Product.java CONSTRUCTOR
-            Product p = new Product(Integer.parseInt(pId), pName, priceVal); 
-            
-            myCart.addItem(p);
-        }
-        
-        %>
-
-        <script>
-            alert("✅ Added <%= pName %> to cart!");
-            window.location.href = "main.jsp"; 
-        </script>
-        <%
-        return; 
-    }
-
-    /// --- 0.6 HANDLE REMOVE FROM CART ---
-    if("remove".equals(action)) {
-        String idToRemove = request.getParameter("id");
-        
-        Cart myCart = (Cart) session.getAttribute("cart");
-        if(myCart != null && idToRemove != null) {
-            int id = Integer.parseInt(idToRemove);
-            
-            // Loop through and find the item to remove
-            java.util.Iterator<Product> iter = myCart.getItems().iterator();
-            while (iter.hasNext()) {
-                Product p = iter.next();
-                if (p.getId() == id) {
-                    iter.remove();
-                    break; 
-                }
-            }
-        }
-        
-        // ✅ CORRECT WAY: Just redirect back to the cart view
-        response.sendRedirect("main.jsp?view=cart");
-        return;
-    }
-%>
-
 <!DOCTYPE html> 
 <html>
     <head>
@@ -282,27 +167,28 @@
                 <div id="new-arrival">
                     <h2 style="color: #2C3E50; text-align: center; font-size: 28px;">New Arrival</h2>
                     <div id="new-arrival-content">
-                        <%
-                            // The logic: Start at 0, go until max, increase by 1
-                            for (int i = 0; i < max; i++) {
-                                Product p = displayList.get(i);
-                                String imgPath = (p.getImage() == null || p.getImage().isEmpty())
-                                        ? "image/default-product.webp"
-                                        : p.getImage();
-                        %>
-                        <div class="products"
-                             data-id="<%= p.getId() %>"
-                             data-name="<%= p.getName() %>"
-                             data-price="<%= p.getPrice() %>">
-
-                            <img src="<%= imgPath %>" class="pic">
-                            <p><%= p.getName() %></p>
-                            <p>$<%= String.format("%.2f", p.getPrice()) %></p>
+                        <div class="products" data-id="1" data-name="square Pink Kembang" data-price="45">
+                            <img src="image/Pink%20Kembang%20BACK.webp" id="pink-kembang" class="pic">
+                            <p>Square Pink Kembang</p>
+                            <p>$45</p>
                             <img class="star" src="image/Five%20star.png">
                             <button class="add-to-cart">Add To Cart</button>
                         </div>
-                        <% } %>
-                    </div>
+                        <div class="products" data-id="2" data-name="shawl Grey Premium" data-price="80">
+                            <img src="image/Grey%20Gintih%20FS.webp" id="grey-gintih" class="pic">
+                            <p>Shawl Grey Premium</p>
+                            <p>$80</p>
+                            <img class="star" src="image/Five%20star.png">
+                            <button class="add-to-cart">Add To Cart</button>
+                        </div>
+                        <div class="products" data-id="3" data-name="shawl Black Mekkah" data-price="80">
+                            <img src="image/Black%20Jelaga%20FS.webp" id="shawl-black-mekkah" class="pic">
+                            <p>Shawl Black Mekkah</p>
+                            <p>$80</p>
+                            <img class="star" src="image/Four%20Half%20Star.png">
+                            <button class="add-to-cart">Add To Cart</button>
+                        </div>
+                    </div>   
                 </div>
                 <div id="popular-now">
                     <h3 class="title">Popular Now</h3>
@@ -492,9 +378,9 @@
                 <td>RM <%= String.format("%.2f", p.getPrice()) %></td>
                 
                 <td>
-                    <a href="main.jsp?action=remove&id=<%= p.getId() %>" 
-                       style="color: white; background-color: #DB4444; padding: 5px 10px; text-decoration: none; border-radius: 5px; font-size: 12px;">
-                       Remove
+                    <a href="cart-action?action=remove&id=<%= p.getId() %>" 
+                    style="color: white; background-color: #DB4444; padding: 5px 10px; border-radius: 5px;">
+                    Remove
                     </a>
                 </td>
             </tr>
@@ -613,26 +499,56 @@
     <div class="summary-section">
         <section id="order-summary">
             <h2>Your Order</h2>
-            <table>
-                <thead>
-                    <tr>
-                        <th>Item (Qty)</th>
-                        <th>Total</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    </tbody>
-                <tfoot>
-                    <tr>
-                        <td>Subtotal:</td>
-                        <td>RM 0.00</td>
-                    </tr>
-                    <tr style="font-weight: bold; color: #4B0082;">
-                        <td>Grand Total:</td>
-                        <td>RM 0.00</td>
-                    </tr>
-                </tfoot>
-            </table>
+        <table>
+            <thead>
+                <tr>
+                    <th>Item (Qty)</th>
+                    <th>Total</th>
+                </tr>
+            </thead>
+    
+        <tbody>
+            <% 
+                // 1. Get the Cart from the Session
+                Cart checkoutCart = (Cart) session.getAttribute("cart");
+                double checkoutTotal = 0.00;
+
+                // 2. Check if the cart exists
+                if(checkoutCart != null && checkoutCart.getItems() != null && !checkoutCart.getItems().isEmpty()) {
+                    
+                    // 3. Calculate the total for the footer
+                    checkoutTotal = checkoutCart.getTotalPrice();
+
+                    // 4. Loop through every product to make a Row <tr>
+                    for(Product p : checkoutCart.getItems()) {
+            %>
+                <tr>
+                    <td><%= p.getName() %> <span style="color: #888; font-size: 0.9em;">(x1)</span></td>
+                    <td>RM <%= String.format("%.2f", p.getPrice()) %></td>
+                </tr>
+            <% 
+                    } 
+                } else { 
+            %>
+                <tr>
+                    <td colspan="2" style="text-align: center; color: red;">No items in cart.</td>
+                </tr>
+            <% 
+                } 
+            %>
+        </tbody>
+
+        <tfoot>
+            <tr>
+                <td>Subtotal:</td>
+                <td>RM <%= String.format("%.2f", checkoutTotal) %></td>
+            </tr>
+            <tr style="font-weight: bold; color: #4B0082;">
+                <td>Grand Total:</td>
+                <td>RM <%= String.format("%.2f", checkoutTotal) %></td>
+            </tr>
+        </tfoot>
+    </table>
         </section>
     </div>
 </div>
