@@ -872,7 +872,6 @@ th,td{
 
 /* Profile Form Card Styling */
 .profile-content {
-    display: flex;
     flex: 1; /* Form takes up remaining space */
 }
 

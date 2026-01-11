@@ -616,7 +616,7 @@
                 <div class="sidebar-group">
                     <h3>Manage My Account</h3>
                     <ul>
-                        <li><a href="#" class="active-link">My Profile</a></li>
+                        <li><a href="#profile-page" class="active-link">My Profile</a></li>
                     </ul>
                 </div>
 
@@ -624,7 +624,7 @@
                     <h3>My Orders</h3>
                     <ul>
                         <li><a href="#">Orders</a></li>
-                        <li><a href="#">My History</a></li>
+                        <li><a id="sidebar-history-link">My History</a></li>
                     </ul>
                 </div>
             </nav>
@@ -640,7 +640,7 @@
                             <label for="user-name">Username</label>
                             <input type="text" id="user-name" >
                         </div>
-
+                    </div>
                     <div class="form-row">
                         <div class="input-group">
                             <label for="profile-email">Email</label>

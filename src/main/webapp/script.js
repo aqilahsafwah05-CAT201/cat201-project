@@ -83,6 +83,24 @@ function showProfilePage() {
     }
 }
 
+// 1. Get the elements
+const historyLink = document.getElementById("sidebar-history-link");
+const historyPage = document.getElementById("order-history-page");
+
+// 2. Define the show function
+function showHistoryPage() {
+    hideAllPages(); // Helper function we made earlier
+    historyPage.style.display = "block"; // Use block or flex depending on your CSS
+}
+
+// 3. Add the click listener
+if (historyLink) {
+    historyLink.addEventListener("click", (event) => {
+        event.preventDefault(); // Stop the link from jumping
+        showHistoryPage();
+    });
+}
+
 // --- 5. EVENT LISTENERS (Buttons) ---
 
 const homeBtn = document.getElementById("home-button");
