@@ -295,4 +295,4 @@ document.addEventListener("DOMContentLoaded", function() {
     // attach nav buttons (optional)
     document.getElementById('home-button').addEventListener('click', () => showPage('main-page'));
     document.getElementById('cart-button').addEventListener('click', () => showPage('cart-page'));
-});
+    });
