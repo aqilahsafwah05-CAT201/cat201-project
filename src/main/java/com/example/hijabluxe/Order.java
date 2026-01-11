@@ -1,7 +1,6 @@
 package com.example.hijabluxe;
 
-import java.time.LocalDateTime;
-import java.time.format.DateTimeFormatter;
+
 
 public class Order {
     private int id;
@@ -11,7 +10,7 @@ public class Order {
     private double amount;
     private String paymentMethod;
     private String status;
-    private String orderDate;
+
 
     public Order(int id, String customerName, String email, String address, double amount, String paymentMethod) {
         this.id = id;
@@ -21,7 +20,6 @@ public class Order {
         this.amount = amount;
         this.paymentMethod = paymentMethod;
         this.status = "Processing"; // Default status
-        this.orderDate = LocalDateTime.now().format(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm"));
     }
 
     // Getters
@@ -32,5 +30,4 @@ public class Order {
     public double getAmount() { return amount; }
     public String getPaymentMethod() { return paymentMethod; }
     public String getStatus() { return status; }
-    public String getOrderDate() { return orderDate; }
 }

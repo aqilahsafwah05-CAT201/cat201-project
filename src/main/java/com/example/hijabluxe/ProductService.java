@@ -4,7 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class ProductService {
-    // This 'instance' makes sure we only have ONE list for the whole app
+
     private static ProductService instance;
     private List<Product> productList;
 

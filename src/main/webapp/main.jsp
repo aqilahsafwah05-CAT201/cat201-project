@@ -576,26 +576,7 @@
             for (int i = 0; i < history.size(); i++) {
                 Order ord = history.get(i);
 
-            /*// 1. Get the list of orders from the server
-            List<String[]> myHistoryList = (List<String[]>) application.getAttribute("orderDB");
 
-            // 2. Check if there are any orders
-            if (myHistoryList != null && !myHistoryList.isEmpty()) {
-                
-                // 3. Loop through them (Backwards so newest is first)
-                for (int i = myHistoryList.size() - 1; i >= 0; i--) {
-                    String[] order = myHistoryList.get(i);
-                    
-                    // Extract data (Matches your OrderServlet format)
-                    String hName = order[0];
-                    String hEmail = order[1];
-                    // order[2] is address
-                    // order[3] is state
-                    // order[4] is payment
-                    String hTotal = order[5];*/
-                    // NEW WAY using the Order class
-
-            // Fetch list from global application scope
         %>
 
 

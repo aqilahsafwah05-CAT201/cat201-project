@@ -11,7 +11,7 @@ public class Product {
     // Simple counter to give each product a unique number
     private static int nextId = 1;
 
-    // --- ADD THIS CONSTRUCTOR INSIDE YOUR CLASS ---
+    // --- ACONSTRUCTOR  ---
     public Product(int id, String name, double price) {
         this.id = id;
         this.name = name;
