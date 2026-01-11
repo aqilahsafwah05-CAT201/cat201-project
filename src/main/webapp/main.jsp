@@ -125,7 +125,7 @@
                     <h1>Create an Account</h1>
                     <p>Enter your details below</p>
                         <form id="sign-up-form" method="post" action="main.jsp">
-                            <input type="text" id="sign-up-name" name="signup_name" placeholder="Name" required>
+                            <input type="text" id="sign-up-name" name="signup_name" placeholder="Username" required>
                             <input type="email" id="sign-up-email" name="signup_email" placeholder="Email" required>
                             <input type="password" id="sign-up-password" name="signup_password" placeholder="Password" required>
                             <div id="create-button">
@@ -658,7 +658,7 @@
                     <%
                         User currentUser = (User) session.getAttribute("currentUser");
                     %>
-                    <p>Name: <%= (currentUser != null ? currentUser.getUsername() : "Guest") %></p>
+                    <p>Username: <%= (currentUser != null ? currentUser.getUsername() : "Guest") %></p>
                     <p>Email: <%= (currentUser != null ? currentUser.getEmail() : "-") %></p>
                     <p>Address: <%= (currentUser != null ? currentUser.getAddress() : "-") %></p>
                     <button class="btn-save" onclick="showPage('edit-profile-page')">Edit Profile</button>
