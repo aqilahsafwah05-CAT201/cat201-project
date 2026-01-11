@@ -537,7 +537,7 @@
 
 
         <div id="checkout-page" class="page">
-    <form method="POST" action="main.jsp">
+    <form method="POST" action="orders">
         <section id="shipping-details">
             <h2>1. Delivery Details</h2>
             
@@ -596,17 +596,6 @@
         </section>
         
         <button type="submit" id="place-order-btn">Complete Purchase</button>
-
-        <% if(checkoutEmail != null && checkoutFullName != null) { %>
-            <div style="background-color: #fff3cd; padding: 10px; margin: 10px 0;">
-                Checkout Info:<br>
-                Name: <%= checkoutFullName %><br>
-                Email: <%= checkoutEmail %><br>
-                Phone: <%= checkoutPhone %><br>
-                Address: <%= checkoutAddress %>, <%= checkoutCity %>, <%= checkoutState %>, <%= checkoutPostcode %><br>
-                Payment: <%= checkoutPayment %>
-            </div>
-        <% } %>
     </form>
 
     <div class="summary-section">
